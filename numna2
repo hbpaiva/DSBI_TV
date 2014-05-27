@@ -1,0 +1,18 @@
+numna2<-function(x){
+	nc<-ncol(x)
+	nl<-nrow(x)
+	result<-data.frame()
+	for(i in 1:nc){
+		result[i,1]<-names(x[i])
+		result[i,2]<-as.numeric(I(100*sum(is.na(x[i]))/nl))
+		result[i,3]<- i
+	}
+result[4]<-c(1:nc)
+names(result)[1]<-"Coluna"
+names(result)[2]<-"Porcentagem de NAs"
+names(result)[3]<-"Posição na tabela"
+names(result)[4]<-"Sequência"
+result<-result[ order(-result[,2], result[,1]), ]
+result[4]<-c(1:nc)
+print(result, digits=2)
+}
