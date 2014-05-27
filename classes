@@ -1,0 +1,17 @@
+classes<-function(x){
+	nc<-ncol(x)
+	nl<-nrow(x)
+	type<-character()
+	for(i in 1:nc){
+	type[i]<-class(x[1,i])	
+	}
+	classes<-unique(type)
+	nclass<-length(classes)
+	result<-data.frame()
+	for(j in 1:nclass){
+		result[j,1]<-classes[j]
+		result[j,2]<-sum(type==classes[j])
+	}
+names(result)<-c("Classe","N. de Colunas")
+return(result)
+}
