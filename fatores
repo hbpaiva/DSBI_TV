@@ -19,3 +19,4 @@ result[2]<-as.integer(pos)
 names(result)<-c("Coluna","Posição")
 return(result)
 }
+
