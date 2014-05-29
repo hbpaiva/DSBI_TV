@@ -12,4 +12,4 @@ colOK <- function(x){
 				}
 				tabela<-data.frame(colunaOK)
 				return(tabela)
-		}
+			}
