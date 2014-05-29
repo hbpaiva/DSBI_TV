@@ -12,5 +12,4 @@ colNA <- function(x){
 				tabela<-data.frame(colunaNA)
 			      
 				return(tabela)
-								
 			}
