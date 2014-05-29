@@ -1,0 +1,20 @@
+poscolNA <- function(x){
+				colunaNA = character()
+				posicao = character()
+				nc <- ncol(x)
+				nl <- nrow(x)
+				k=1
+				j=1
+				for(i in 1:nc){
+						if (sum(is.na(x[i])) == nl){
+							colunaNA[k] <- names(x[i])
+							posicao[j] <- which(names(x)==colunaNA[k])
+							k=k+1
+							j=j+1	
+						}
+				}
+				tabela<-data.frame(colunaNA, posicao)
+			      
+				return(tabela)
+								
+			}
