@@ -1,0 +1,15 @@
+colOK <- function(x){
+				colunaOK = character()
+				nc <- ncol(x)
+				nl <- nrow(x)
+				k=1
+				for(i in 1:nc){
+						if (sum(is.na(x[i])) != nl){
+							colunaOK[k] <- names(x[i])
+							k=k+1
+           				 	}
+						
+				}
+				tabela<-data.frame(colunaOK)
+				return(tabela)
+		}
