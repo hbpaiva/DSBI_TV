@@ -1,0 +1,18 @@
+tabcol <- function(x){
+				NomeColuna  = integer() ## definido desta maneira para tratarmos como vetor
+				posicao = integer()
+				porcentagemNA = numeric()
+				nc <- ncol(x)  ## numero de colunas
+				nl <- nrow(x)  ## numero de linhas
+				k=1            ## k inicia com o valor 1 para identificar a primeira posição do vetor
+				for(i in 1:nc){
+							NomeColuna[k] <- names(x[i])				 ## a coluna recebe o nome do names da tabela em questão (nesse caso estavamos usando a tabela de fcdrs)
+							posicao[k] <- which(names(x)==NomeColuna[k])     ## a função which dá a posição da coluna 
+							porcentagemNA[k] <- 100*(sum(is.na(x[i]))/nl)
+							k=k+1
+						   }		
+				tabela<-data.frame(NomeColuna, posicao, porcentagemNA)
+				tabela2<-tabela[order(-tabela[,3], tabela[,2]),]                   ## ordenar em ordem crescente ou decrescente (coloca o sinal de -) e por qual deve ordenar (nesse caso ordena primeiro pela coluna 3 e depois 
+				print(tabela2, digits=2)
+			}								
+
