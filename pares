@@ -1,4 +1,4 @@
-pares2<-function(fcdr,posA=12,posB=14,posDur=40){
+pares3<-function(fcdr,posA=12,posB=14,posDur=40){
 
 	idmaker = function(vec){
 	return(paste(sort(vec), collapse=""))
@@ -14,11 +14,12 @@ pares2<-function(fcdr,posA=12,posB=14,posDur=40){
 		pares[i,2]<-fcdr[i,posA]
 		pares[i,3]<-fcdr[i,posB]
 		pares[i,4]<-fcdr[i,posDur]
+		pares[i,5]<-1
 		par_i<-c(fcdr[i,posA],fcdr[i,posB])
 		par_i<-sort(par_i)
 		n<-nchar(par_i[1])
 		pares[i,1]<-I(par_i[1]+((10^n)*par_i[2]))
 	}
-	pares<-aggregate(pares$Duration,list(pares$Id),sum)
+	pares<-aggregate(x=pares,by=list(pares$Id),FUN="sum")
 return(pares)
 }
