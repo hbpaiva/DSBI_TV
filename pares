@@ -17,9 +17,12 @@ pares3<-function(fcdr,posA=12,posB=14,posDur=40){
 		pares[i,5]<-1
 		par_i<-c(fcdr[i,posA],fcdr[i,posB])
 		par_i<-sort(par_i)
-		n<-nchar(par_i[1])
-		pares[i,1]<-I(par_i[1]+((10^n)*par_i[2]))
+		n<-nchar(par_i[2])
+		pares[i,1]<-I(par_i[2]+((10^n)*par_i[1]))
 	}
-	pares<-aggregate(x=pares,by=list(pares$Id),FUN="sum")
-return(pares)
+	interm<-pares[c(1,4,5)]
+	id<-data.frame()
+	id<-pares[1]	
+	result<-aggregate(x=interm,by=c(id),FUN=sum)
+return(result)
 }
