@@ -1,32 +1,18 @@
-DSBI_TV
-=======
+tabela<-function(fcdr,NUMERO_A,NUMERO_B,DURACAO_TOTAL){
+		new1<-data.frame(fcdr$NUMERO_A,fcdr$NUMERO_B)
+		inversa1<-data.frame(t(new1))
+		x<-(lapply(inversa1,sort))
+		x1<-data.frame(x)
+		inversa1<-data.frame(t(x1))			
+		id<-data.frame(paste(inversa1$fcdr.NUMERO_A,inversa1$fcdr.NUMERO_B))
+		table<-data.frame(id,fcdr$DURACAO_TOTAL)
+		tabelafinal<-aggregate(fcdr$DURACAO_TOTAL,id,FUN=sum)
+		return(tabelafinal)
+		}
 
-duracao<- function(x,colA,colB,colT){ 
-nl=nrow(x)
-f=1
-j=1
-v=1
-p=integer()
-tempo=integer()
-ocorrencias=integer()
-while(j <= nl){
-		  k=1
-		  a<-x[j,colA]
-		  b<-x[j,colB]
-		  c<-x[j,colT]
-		  for(i in j:nl){
-					if(x[i,colA]==a){
-							if(x[i,colB]==b){
-									c[k]<-x[i,colT]
-									k=k+1
-																			
+tabela<-function(new,a,b,d){		
+		id<-data.frame(paste(new$a,new$b))
+		tabela<-data.frame(id,d)
+		tabelafinal<-aggregate(d,id,FUN="sum")
+		#return(tabelafinal)
 		}
-		}
-		}		
-		 tempo[f]<-sum(c)
-		 ocorrencias[f]<-k-1
-		 f=f+1
-		 j=j+1	
-		 }	
-return(data.frame(tempo,ocorrencias))
-}
