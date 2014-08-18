@@ -1,0 +1,24 @@
+separacategorias<-function(x){
+##recebe como entrada um data frame
+	nc<-ncol(x)
+	nl<-nrow(x)
+	vetor<-vector()
+	for(i in 1:nc){
+			vetor[I((i-1)* nl + 1):I(i*nl)]<-x[1:nl,i]
+	}
+	x<-unique(vetor)
+	nl<-length(x)
+	result<-data.frame(1:nl,2)
+	names(result)<-c("Numero","Topico")
+	for(i in 1:nl){
+		pos<-str_locate_all(pattern =':',x[i])
+		pos2<-as.data.frame(pos)
+		pos3<-pos2[1,1]
+		pos4<-pos2[2,1]
+		result[i,2]<-substring(x[i],I(pos4+1))
+		result[i,1]<-as.integer(substring(x[i],I(pos3+1),I(pos4-1)))
+	}
+	result<-result[order(result$Numero),]
+	print(result)
+	
+}
