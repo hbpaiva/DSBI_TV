@@ -1,0 +1,15 @@
+#função que separa o dominio do website de seu título
+#recebe a tabela inteira como entrada
+dominiod<-function(websites){
+	nl<-nrow(websites)
+	nc<-ncol(websites)
+	result<-data.frame(1,1)
+	names(result)<-c("Dominio","Título")
+	for(i in 1:nc){
+		result[i,1]<-unlist(strsplit(websites[i,11],"::",fixed=TRUE))[1]
+		result[i,2]<-unlist(strsplit(websites[1,11],"::",fixed=TRUE))[1]
+		
+	}
+#imprime a tabela original com as duas colunas "dominio" e "titulo" agregadas à direita
+	print(cbind(websites,result))
+}
