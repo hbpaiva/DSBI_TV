@@ -4,22 +4,19 @@ Repositório Henrique e Juliana
 topicos<-read.csv2("Tópicos - Cópia.txt", header=FALSE, colClasses="character")
 
 lista <- function(topicos){
-
-topicos2<-unlist(strsplit(topicos$V1,";"))
-topicos3<-unlist(strsplit(topicos2,":"))
- 
-resultado<-data.frame(length(topicos2),2)
+topicos2<-unlist(strsplit(topicos$Related.Topics,";")) 
+topicos3<-unlist(strsplit(topicos2,":"))  
+resultado<-data.frame(length(topicos2),2) 
 j=1
+nrow=length(topicos2)
 for(i in 1:nrow){
 	
-	##resultado[i,1]<-topicos3[j] (tirei a coluna que tinha os itens topics, por isso o ##)
-	resultado[i,1]<-topicos3[j+1]
-	resultado[i,2]<-topicos3[j+2]
-	j=j+3
+	resultado[i,1]<-topicos3[j+1] 
+	resultado[i,2]<-topicos3[j+2] 
+	j=j+3 
 }
-
 names(resultado)<-c("Número","Tópico")
 resultado$Número<-as.numeric(resultado$Número)
 resultado<-data.table(resultado[order(resultado$Número),])
-return(unique(resultado)) ## Se tirar o "unique" mostrará as demais repetições
+return(unique(resultado)) 
 }
