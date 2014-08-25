@@ -1,0 +1,29 @@
+numerostopicos<-function(websites){
+	nl<-nrow(websites)	
+	result<-data.frame()
+	interm<-list()
+	interm2<-integer()
+	ntops<-integer()
+	nmax<-integer()
+	nmax<-1
+	for(i in 1:nl){
+		interm<-strsplit(as.character(websites[i,24]),":")
+		interm<-unlist(interm)	
+		ntops<-length(interm)
+		ntops<-ntops%/%2
+		if(ntops>nmax){
+			nmax<-ntops
+		}
+		for(j in 1:nmax){
+			if(ntops==0){
+				result[i,j]<-NA
+			}
+			else{		
+				result[i,j]<-interm[2*j]
+			}
+		}
+
+	}
+	websites<-cbind(websites,result)
+	print(websites)
+}
