@@ -1,0 +1,144 @@
+## abrir tabela DPI
+
+setwd("C:/Users/A0040234/Desktop/Teste Sas")
+dpi<-read.table("Tabela Stage DPI-2.txt", sep="\t" , fill=TRUE, header=TRUE, na.strings= " " )
+
+subdpi<-subset(dpi, select=c(procedure_duration,msisdn,uri,mean_throughput_ul, 
+
+mean_throughput_dl,total_ul_frames,total_dl_frames,total_data_ul,total_data_dl,host_name,cgi, cell_id,session_duration))
+
+## Tirei as linhas que tem NA no msisdn ou no host_name
+cleansubdpi <- subdpi[complete.cases(subdpi[,c(2,10)]),]
+
+## Abrir Lista Marcelo
+
+lista<- read.table("Lista Sites.txt", sep="\t", header=TRUE, colClasses="character") ## Essa é a lista completa separado portal, categoria etc
+##sites<-read.table("Sites Marcelo Completo.txt", sep="\t" , colClasses= "character")
+
+## Limpar lista Marcelo (tirar o http://www.)
+
+site<-str_replace(lista$URL,"http://","") 
+site1<-str_replace(site,"www.","")
+
+## Unir a coluna host_name com uri - talvez não seja a melhor prática (paste0 não coloca espaço entre os objetos)
+
+cleansubdpi$J<-paste0(cleansubdpi$host_name,cleansubdpi$uri)
+
+
+
+## Primeira Maneira
+## comparar sites completos - host_name mais uri - retorna uma lista com as posições em que encontraram match
+
+teste1 <- function(sites,subdpi){
+	nrow=length(sites)
+	novo <- data.frame()
+	pos <- vector(mode="list", nrow)
+	for (i in 1:nrow){
+
+		t<-str_detect(subdpi$J, sites[i])
+		pos[[i]]<-which(t==1)
+	}
+	names(pos)<- sites
+	return(pos)
+	}
+
+
+
+## Problema na comparação!
+
+teste2 <- function(teste,cleansubdpi){
+
+j=1
+nrow<-length(teste)
+novo <- vector(mode="list", nrow)
+
+
+for(i in 1:nrow){
+ 
+if(length(teste[[i]])!=0){
+novo[[i]]<-cleansubdpi[c(teste[[i]]),]
+}
+}
+return(novo)
+}
+
+
+
+teste2 <- function(teste,cleansubdpi){
++ j=1
++ novo <- data.frame()
++ nrow<-length(teste)
++ 
++ for(i in 1:nrow){
++ 
++ if(length(teste[[i]])!=0){
++ novo<-sapply(cleansubdpi[c(teste[[i]]),]
++ }
++ }
++ return(novo)
++ }
+
+
+
+
+
+
+
+
+
+
+
+
+## Segunda Maneira
+
+## comparar apenas os host_name sem o uri
+
+teste <- function(sites,subdpi){
+	
+	nrow=length(sites)
+	pos <- vector(mode="list", nrow)
+	for (i in 1:nrow){
+
+		t<-str_detect(subdpi$J, sites[i])
+		pos[[i]]<-which(t==1)
+	}
+	names(pos)<- sites
+	return(pos)
+	}
+
+## Comparar uri com o // dos sites 
+
+## Pega os // dos sites e comparar com o uri - retorna uma lista com as posições em que encontraram match - trás um vetor com ocorrencias unicas!
+
+v<-str_extract(site1[28],"/.+")
+
+teste <- function(sites,subdpi){
+	v<-unique(gsub( "/.*$", "", site1 ))
+	nrow=length(v)
+	pos <- vector(mode="list", nrow)
+	for (i in 1:nrow){
+		t<-str_detect(subdpi$host_name, v[i])
+		pos[[i]]<-which(t==1)
+	}
+	names(pos)<- v
+	return(pos)
+	}
+
+
+
+
+
+
+teste <- function(sites,subdpi){
+	
+	nrow=length(sites)
+	pos <- vector(mode="list", nrow)
+	for (i in 1:nrow){
+
+		t<-str_detect(subdpi$J, sites[i])
+		
+
+	}
+	names(pos)<- sites
+	return(pos)
+	}
