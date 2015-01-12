@@ -1,0 +1,2035 @@
+# DSBI_TV
+Repositório Henrique e Juliana
+---------filtra/cria três tabelas/ Categoriza os sites----------
+create external table jaf_cat_portais_novo3 (
+procedure_duration string,
+msisdn string,
+uri string,
+mean_throughput_ul string,
+mean_throughput_dl string,
+total_ul_frames string,
+total_dl_frames string,
+total_data_ul string,
+total_data_dl string,
+host_name string,
+cgi string,
+cell_id string,
+session_duration string,
+categoria string
+)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '\;'
+stored as TEXTFILE
+
+
+LOCATION '/home/hadoop/output/Portais_Limpo_07_01.csv';
+insert into table jaf_cat_portais_novo2
+
+LOAD DATA LOCAL INPATH '/home/hadoop/output/Portais_Limpo_07_01.csv' into table jaf_cat_portais_novo3
+
+
+select
+
+procedure_duration,
+msisdn,
+uri,
+mean_throughput_ul,
+mean_throughput_dl,
+total_ul_frames,
+total_dl_frames,
+total_data_ul,
+total_data_dl,
+host_name,
+cgi,
+cell_id,
+session_duration,
+ 
+case
+
+when(
+
+    (uri like '%esoterico%'
+    or uri like '%horoscopo%')
+
+    or (host_name like '%cristaisaquarius.com.br%' and uri like '%%'
+    or host_name like '%esotera.com.br%' and uri like '%%'
+    or host_name like '%circulodediana.com.br%' and uri like '%%'
+    or host_name like '%brasilesoterico.com%' and uri like '%%'
+    or host_name like '%aromaemagia.com.br%' and uri like '%%'
+    or host_name like '%mandalaesoterica.com.br%' and uri like '%%'
+    or host_name like '%tendadaalma.com%' and uri like '%%'
+    or host_name like '%lojaviasol.com.br%' and uri like '%%'
+    or host_name like '%esotericaonline.com.br%' and uri like '%%'
+    or host_name like '%maniasemanias.com%' and uri like '%%'
+    or host_name like '%viaverdenaturais.com.br%' and uri like '%%'
+    or host_name like '%mistsul.com.br%' and uri like '%%'
+    or host_name like '%djovia.com.br%' and uri like '%%'
+    or host_name like '%nefertitionline.com.br%' and uri like '%%'
+    or host_name like '%oreidasvelas.com.br%' and uri like '%%')
+)
+
+then 'Esoterico'
+
+when(
+
+    (host_name like '%hotelfazendasolardasandorinhas.com%'
+    or host_name like '%portalterceiraidade.org.br%'
+    or host_name like '%magiccity.com.br%' 
+    or host_name like '%vidadeturista.com%' 
+    or host_name like '%venturas.com.br%' 
+    or host_name like '%viajamais.gov.br%' 
+    or host_name like '%aterceiraidade.com%' 
+    or host_name like '%cinthetur.com.br%' 
+    or host_name like '%bonami.com.br%' 
+    or host_name like '%cvc.com.br%' 
+    or host_name like '%btgviagens.com.br%' 
+    or host_name like '%cepe.usp.br%' 
+    or host_name like '%cursostk.com%' 
+    or host_name like '%portalamigodoidoso.com.br%'
+    or host_name like '%abcvida.org.br%' 
+    or host_name like '%encontraipiranga.com.br%' 
+    or host_name like '%sescsp.org.br%' 
+    or host_name like '%cidadao.sp.gov.br%')
+)
+
+then 'Turismo e Lazer - Terceira Idade'
+
+when(
+
+    (uri like '%informatica-para-terceira-idade%'
+    or uri like '%informatica-melhor-idade%'
+    or uri like '%Informatica-para-Melhor-Idade%'
+    or uri like '%inform%C3%81tica-para-a-terceira-idade%')
+
+    or (host_name like '%portal.metodista.br%'
+    or host_name like '%www.uva.br%' 
+    or host_name like '%compuclass.com.br%' 
+    or host_name like '%apl.unisuam.edu.br%')
+)
+
+then 'Educação-Terceira-Idade'
+
+when host_name like '%sindicatodosaposentados.org.br%' then 'Terceira-Idade'
+
+when uri like '%seguro-de-vida-terceira-idade%' then 'Seguro Terceira-Idade'
+
+when host_name like '%medicinageriatrica.com.br%' then 'Geriatria'
+
+when(
+
+    (host_name like '%residencialmaster.com.br%' and uri like '%%'
+    or host_name like '%residencialparquedasflores.com.br%' and uri like '%%'
+    or host_name like '%casaderepousobemviver.com.br%' and uri like '%%'
+    or host_name like '%portalcasasderepouso.com.br%' and uri like '%%'
+    or host_name like '%residencialagape.com.br%' and uri like '%%'
+    or host_name like '%recantomontealegre.com.br%' and uri like '%%'
+    or host_name like '%casaderepousopaesdebarros.com.br%' and uri like '%%'
+    or host_name like '%paiefilhoja.com.br%' and uri like '%%'
+    or host_name like '%casaderepousodepaula.com.br%' and uri like '%%'
+    or host_name like '%apoiocr.com.br%' and uri like '%%'
+    or host_name like '%casaderepousocoracaojesus.com.br%' and uri like '%%'
+    or host_name like '%moradadosolcr.com.br%' and uri like '%%'
+    or host_name like '%clinicacherubins.com.br%' and uri like '%%'
+    or host_name like '%moocacasaderepouso.com.br%' and uri like '%%'
+    or host_name like '%casa.repouso.residencecare.com.br%' and uri like '%%'
+    or host_name like '%casaderepousoelite.com.br%' and uri like '%%'
+    or host_name like '%casaderepousovidaesaude.com.br%' and uri like '%%'
+    or host_name like '%recantodasflores-sp.com.br%' and uri like '%%'
+    or host_name like '%repousodocelar.com.br%' and uri like '%%'
+    or host_name like '%casaderepousonewlife.com.br%' and uri like '%%' 
+    or host_name like '%casaderepousovillalobos.com.br%' and uri like '%%'
+    or host_name like '%casaderepousovivabem.com.br%' and uri like '%%')
+)
+
+then 'Casa De Repouso'
+
+when(
+
+    (host_name like '%alertasaude24horas.com.br%' and uri like '%%'
+    or host_name like '%cuidardeidosos.com.br%' and uri like '%%'
+    or host_name like '%lifefirst.com.br%' and uri like '%%'
+    or host_name like '%homeangels.com.br%' and uri like '%%'
+    or host_name like '%domcuidadores.com.br%' and uri like '%%'
+    or host_name like '%soshomecare.com.br%' and uri like '%%'
+    or host_name like '%taniascripilliti.com.br%' and uri like '%familiarcuidador%'
+    or host_name like '%maferhomecare.com.br%' and uri like '%%'
+    or host_name like '%qualicorpcuidadores.com.br%' and uri like '%%'
+    or host_name like '%friendscare.com.br%' and uri like '%%'
+    or host_name like '%cvbsp.org.br%' and uri like '%cuidador%'
+    or host_name like '%realcaresaude.com.br%' and uri like '%%'
+    or host_name like '%homedoctor.com.br%' and uri like '%%'
+    or host_name like '%geriatrics.com.br%' and uri like '%homecare%'
+    or host_name like '%ciadoidoso.com.br%' and uri like '%%')
+)
+
+then 'Home Care'
+
+when(
+
+    (host_name like '%teleassistencia.com.br%' and uri like '%%'
+    or host_name like '%helpcarebrasil.com.br%' and uri like '%%'
+    or host_name like '%grupobem.com.br%' and uri like '%%')
+)
+
+then 'Teleassistencia'
+
+
+when host_name like '%sp.senac.br%' and uri like '%selectCourse&course=2728&template=null.dwt&unit=NONE&testeira=996%' then 'Curso Cuidador'
+
+when(
+
+    (uri like '%fitness%'  
+    or uri like '%bemestar/exercicios%' 
+    or uri like '%saude/forca%'
+    or uri like '%atividade-fisica%'
+    or uri like '%eu-atleta%'
+    or uri like '%dicas-de-treinamento%'
+    or uri like '%corpo-em-forma%')
+
+    or (host_name like '%exercitandosaude.com.br%' AND uri like '%%'
+    or host_name like '%educacaofisica.com.br%' AND uri like '%%'
+    or host_name like '%saudeemmovimento.com.br%' AND uri like '%%'
+    or host_name like '%suacorrida.com.br%' AND uri like '%%'
+    or host_name like '%marcioatalla.com.br%' AND uri like '%%'
+    or host_name like '%movimenteseucorpo.blogspot.com.br%'
+    or host_name like '%alelocomerbemtdb.com.br%' and uri like '%movimente-se%'
+    or host_name like '%dicasdetreino.com.br%' and uri like '%%'
+    or host_name like '%guiafitness.com%' and uri like '%%'
+    or host_name like '%guia-fitness.com%' and uri like '%%'
+    or host_name like '%saudeeforca.com%' and uri like '%%'
+    or host_name like '%saudeesportiva.com.br%' and uri like '%%'
+    or host_name like '%movimenteseconsult.com.br%' and uri like '%%'
+    or host_name like '%carlosklein.com.br%' and uri like '%%'
+    or host_name like '%minhavida.com.br%' and uri like '%exerc%C3%ADcios-f%C3%Adsicos%'
+    or host_name like '%musculacaobrasil.com%' and uri like '%%'
+    or host_name like '%fabiomedina.com.br%') 
+)
+
+then 'Atividade Fisica'
+
+
+when(
+
+     (host_name like '%bioritmo.com.br%' and uri like '%%'
+     or host_name like '%gympass.com%' and uri like '%%'
+     or host_name like '%planetsport.com.br%' and uri like '%%'
+     or host_name like '%smartfit.com.br%' and uri like '%%'
+     or host_name like '%bodytech.com.br%' and uri like '%%'     
+     or host_name like '%ciaathletica.com.br%' and uri like '%%'  
+     or host_name like '%bfit.com.br%' and uri like '%%'   
+     or host_name like '%runner.com.br%' and uri like '%%' 
+     or host_name like '%formulaacademia.com.br%' and uri like '%%' 
+     or host_name like '%mondayacademia.com.br%' and uri like '%%' 
+     or host_name like '%new.reebokclub.com.br%' and uri like '%%'    
+     or host_name like '%estacaofitness.com.br%' and uri like '%%')
+)
+
+then 
+
+'Academia'
+
+when(
+
+    (uri like '%monitores-cardiacos%'
+    or uri like '%monitor-cardiaco%'
+    or uri like '%pedometro%'
+    or uri like '%pedometer%')
+
+    or (host_name like '%netshoes.com.br%' and uri like '%departamento/running/monitores%'
+    or host_name like '%sportsonline.com.br%' and uri like '%category&path=71%'
+    or host_name like '%www.dx.com%' and uri like '%cell-phones-accessories-599/gadgets-507%')
+)
+
+then 'Monitor Cardiaco'
+
+when(
+
+    (uri like '%EsporteLazer%'
+    or uri like '%esporte_corrida%'
+    or uri like '%esporte%')
+
+    or (host_name like '%netshoes.com.br%' and uri like '%%'
+    or host_name like '%centauro.com.br%' and uri like '%%'
+    or host_name like '%decathlon.com.br%' and uri like '%%'
+    or host_name like '%nike.com%' and uri like '%%'
+    or host_name like '%adidas.com.br%' and uri like '%%'     
+    or host_name like '%procorrer.com.br%' and uri like '%%' 
+    or host_name like '%wtennis.com.br%' and uri like '%esporte%'  
+    or host_name like '%kanui.com.br%' and uri like '%%' 
+    or host_name like '%starpoint.com.br%' and uri like '%%'
+    or host_name like '%authenticfeet.com.br%')
+)
+
+then 'Artigos Esportivos'
+
+
+when(
+
+    (uri like '%cabelo%' 
+    or uri like '%penteados%'
+    or uri like '%cores-de-cabelo%'
+    or uri like '%calvicie%'
+    or uri like '%beleza-cabelo%')
+ 
+    or (host_name like '%belezatresemme.ig.com.br%' AND uri like '%%'
+    or host_name like '%institutodocabelo.com.br%' and uri like '%%'
+    or host_name like '%mauriciomorelli.com%' and uri like '%%'
+    or host_name like '%dicasdecabelo.com.br%' and uri like '%%'
+    or host_name like '%adrianeboneck.com.br%' and uri like '%%'
+    or host_name like '%cortesepenteados.com.br%' and uri like '%%'
+    or host_name like '%healthyhairclinic.com.br%' and uri like '%%'
+    or host_name like '%panvel.com%' and uri like '%panvel/main.do?categoria=159&%'
+    or host_name like '%helpdoscabelos.com%' and uri like '%%')   
+)
+
+then 'Cabelos'
+
+when(
+
+    (uri like '%maquiage%'
+    or uri like '%Maquiage%')
+
+    or (host_name like '%maquiagem.art.br%' and uri like '%%' 
+    or host_name like '%tudodemaquiagem.com%' and uri like '%%')
+)
+
+then 'Maquiagem'
+
+when(
+ 
+    (uri like '%esmalte%'
+    or uri like '%Esmalte%'
+    or uri like '%unhas%'
+    or uri like '%Unhas%')
+
+    or (host_name like '%tudosobreesmaltes.com%' and uri like '%%')
+)
+
+then 'Unhas'
+
+when (uri like '%celulite%') then 'Celulite'
+
+when (uri like '%maos-e-pes%') then 'Mãos e Pés'
+
+when ( uri like '%estrias%') then 'Estrias'
+
+when (uri like '%pele%') then 'Pele'
+
+when(
+
+    (uri like '%fertilidade%'
+    or uri like '%periodo-fertil%'
+    or uri like '%ovulacao%')
+)
+
+then 'fertilidade'
+
+when (
+
+     (uri like '%filhos%'
+     or uri like '%gravidez%'
+     or uri like '%Gravidez%'
+     or uri like '%gravida%'
+     or uri like'%Gravida%'
+     or uri like '%Gestante%'
+     or uri like '%gestante%'
+     or uri like '%gestacao%'
+     or uri like '%Gestacao%' 
+     or uri like '%familia%' 
+     or uri like '%amamentacao%'
+     or uri like '%engravida%'
+     or uri like '%idade-gestacional%'
+     or uri like '%fecunda%'
+     or uri like '%leite-materno%'
+     or uri like '%bebe%')
+
+     or (host_name like '%bebe.abril.com.br%' AND uri like '%%'
+     or host_name like '%brasil.babycenter.com%' and uri like '%%'
+     or host_name like '%roupasdegravidas.com.br%' and uri like '%%'
+     or host_name like '%mariabarriga.com.br%' and uri like '%%'
+     or host_name like '%zazou.com.br%' and uri like '%%') 
+)
+
+then 'Gravidez'
+
+when(
+
+    (uri like '%moda%'
+    or uri like '%Moda%'
+    or uri like '%pt-br/estilo-de-vida%') 
+
+    or (host_name like   '%moda.terra.com.br%' AND uri like '%%')
+)
+
+ then 'Moda'
+
+when(
+
+    (uri like '%amoresexo%'
+    or uri like '%sexo%'
+    or uri like '%Sexo%'
+    or uri like '%sexual%'
+    or uri like '%Sexual%'
+    or uri like '%sexologia%'
+    or uri like '%saude-com-jairo-bouer%'
+    or uri like '%anticoncepcional%'
+    or uri like '%Anticoncepcional%'
+    or uri like '%sexualidade%'
+    or uri like '%Sexualidade%'
+    or uri like '%erotic%'
+    or uri like '%Erotic%'
+    or uri like '%frases-picante%'
+    or uri like '%orgasmo%'
+    or uri like '%Orgasmo%'
+    or uri like '%menstruacao%'
+    or uri like '%HPV%'
+    or uri like '%hpv%'
+    or uri like '%aids%'
+    or uri like '%Aids%'
+    or uri like '%libido%'
+    or uri like '%Libido%'
+    or uri like '%educacao-sexual%')
+
+    or (host_name like '%portaldasexualidade.com.br%'
+    or host_name like '%lauramuller.com.br%'
+    or host_name like '%mundodaintimidade.com.br%'
+    or host_name like '%mulher.terra.com.br%' and uri like '%vida-a-dois%'
+    or host_name like '%drjairobouer.blog.uol.com.br%'
+    or host_name like '%carlacecarello.com.br%'
+    or host_name like '%sexplicando.com%'
+    or host_name like '%aeducacaosexual.blogspot.com%')
+)
+
+then 'Sexualidade'
+
+when(
+
+   (uri like '%nutricao%')
+
+   or (host_name like '%dietaenteral.com.br%' and uri like '%%'
+   or host_name like '%vegetarianos.com.br%'and uri like '%%'
+   or host_name like '%anutricionista.com%' and uri like '%%'
+   or host_name like '%vegetarianismo.com.br%' and uri like '%%')
+)
+
+then 'Nutrição'
+
+when(
+
+    (uri like '%corpo-em-forma%' 
+    or uri like '%dieta%'
+    or uri like '%Dieta%'	 
+    or uri like '%imc%'
+    or uri like '%IMC%' 
+    or uri like '%calorias%'
+    or uri like '%Calorias%'
+    or uri like '%gasto-calorico%' 
+    or uri like '%emagrece%'
+    or uri like '%Emagrece%'
+    or uri like '%perder-barriga%')
+
+    or (host_name like '%dietadukan.com.br%' and uri like '%%'
+    or host_name like '%dietaesaude.com.br%' and uri like '%%'
+    or host_name like '%lightesaude.com.br%' and uri like '%%'
+    or host_name like '%bioimis.com.br%' and uri like '%%'
+    or host_name like '%comersempeso.com%' and uri like '%%'
+    or host_name like '%maisemforma.com.br%' and uri like '%%'
+    or host_name like '%emagrecerdicas.com.br%' and uri like '%%'
+    or host_name like '%boaforma.uol.com.br%' and uri like '%%'
+    or host_name like '%guiadadieta.com.br%' and uri like '%%'
+    or host_name like '%solangefrazao.com.br%' and uri like '%%'
+    or host_name like '%blogdamimis.com.br%' and uri like '%%'
+    or host_name like '%suadieta.com.br%' and uri like '%%'
+    or host_name like '%revistashape.uol.com.br%' and uri like '%%'
+    or host_name like '%dietaemagrecerurgente.com%' and uri like '%%'
+    or host_name like '%carolbuffara.com.br%' and uri like '%%'
+    or host_name like '%carolmagalhaes.com%' and uri like '%%'
+    or host_name like '%tips4life.com.br%' and uri like '%%'
+    or host_name like '%bymarina.com.br%' and uri like '%%'
+    or host_name like '%acreditabonita.com.br%' and uri like '%%'
+    or host_name like '%vigilantesdopeso.com.br%' and uri like '%%'
+    or host_name like '%cyberdiet.com.br%' and uri like '%%'
+    or host_name like '%dietaja.uol.com.br%' and uri like '%%'
+    or host_name like '%calcularpesoideal.com.br%' AND uri like '%%'
+    or host_name like '%dietapontos.com.br%' AND uri like '%%'
+    or host_name like '%dietasobcontrole.org%' AND uri like '%%'
+    or host_name like '%indicedemassacorporal.com%' AND uri like '%%')
+)
+
+then 'Dieta'
+
+when(
+
+    (uri like '%alimentacao%'
+    or uri like '%Alimentacao%'
+    or uri like '%alimentacao+saudavel%'
+    or uri like '%receitas-e-dietas%'
+    or uri like '%receitasebebidas%'
+    or uri like '%gastronomia%')
+
+    or (host_name like '%alimentacaosaudavel.org%' and uri like '%%'
+    or host_name like '%doutorgourmet.com%' and uri like '%%'
+    or host_name like '%alimentacao-saudavel.com%' and uri like '%%'
+    or host_name like '%asreceitassaudaveis.com%' and uri like '%%'
+    or host_name like '%comersaudavel.blogspot.com%' and uri like '%%'
+    or host_name like '%meupratosaudavel.com.br%' and uri like '%%'
+    or host_name like '%gulosoesaudavel.com.br%' and uri like '%%')
+)
+
+then 'Alimentação'
+
+when(
+
+    (uri like '%alimentacao-infantil%'
+    or uri like '%alimenta%C3%A7%C3%A3o-infantil%'
+    or uri like '%saude-na-escola%'
+    or uri like '%nutricao-pediatrica%')
+
+    or (host_name like '%sustagennutriferro.com.br%' and uri like '%%'
+    or host_name like '%cardapiodobebe.com.br%' and uri like '%%'
+    or host_name like '%alimentacao-infantil.info%' and uri like '%%'
+    or host_name like '%nestle.com.br%' and uri like '%pais-e-filhos%'
+    or host_name like '%danonenutricao.com.br%' and uri like '%%'
+    or host_name like '%danonebaby%' and uri like '%%')
+)
+
+then 'Alimentação Infantil'
+
+when(
+
+    (uri like '%orientacao-infantil%'
+    or uri like '%orientacao-aos-pais%'
+    or uri like '%aprendizado-infantil%'
+    or uri like '%orienta%C3%A7%C3%A3o-infantil%'
+    or uri like '%supernanny%'
+    or uri like '%educacaoinfantil%')
+
+    or (host_name like '%crispoli%' and uri like '%%'
+    or host_name like '%revistaescola.abril.com%' and uri like '%creche-pre-escola%'
+    or host_name like '%daniellafaria.com%' and uri like '%%'
+    or host_name like '%pediatriaemfoco.com.br%' and uri like '%%'
+    or host_name like '%corpoematividade.com%' and uri like '%%'
+    or host_name like '%lucianarizo.com.br%' and uri like '%%'
+    or host_name like '%criancas.uol.com.br%' and uri like '%%'
+    or host_name like '%atrasonafala.com.br%'
+    or host_name like '%maternar.blogfolha.uol.com.br%'
+    or host_name like '%brasilescola.com%' and uri like '%saude-na-escola%')
+)
+
+then 'Orientação Infantil'
+
+when(
+
+    (uri like '%infantil%')
+
+    or (host_name like '%pbkids.com.br%' and uri like '%%'
+    or host_name like '%rihappy.com.br%' and uri like '%%'
+    or host_name like '%bebestore.com.br%' and uri like '%%'
+    or host_name like '%newcenterbrinquedos%' and uri like '%%'
+    or host_name like '%toymania.com.br%' and uri like '%%'
+    or host_name like '%mpbrinquedos.com.br%' and uri like '%%'
+    or host_name like '%clickjogos.com.br%' and uri like '%%'
+    or host_name like '%igkids.ig.com.br%' and uri like '%%') 
+)
+
+then 'Criança'
+
+when(
+
+    (uri like '%saude-mental%'
+    or uri like '%yoga%'
+    or uri like '%pilates%'
+    or uri like '%bem-estar%')
+
+    or (host_name like '%metododerose.org%' and uri like '%%'
+    or host_name like '%abqv.com.br%' and uri like '%%'
+    or host_name like '%uni-yoga.org.br%' and uri like '%%'
+    or host_name like '%blogdasaude.com.br%' and uri like '%%'
+    or host_name like '%espacoyoga.com.br%' and uri like '%%'
+    or host_name like '%pilates.com.br%' and uri like '%%')
+)
+
+then 'Bem Estar'
+
+when(
+
+    (uri like '%espiritual%')
+
+    or (host_name like '%usesp.org.br%'
+    or host_name like '%provida.org.br%')
+)
+
+then 'Espiritualidade'
+
+when( 
+
+    (uri like '%saude%'
+    or uri like '%Saude%'
+    or uri like '%bemestar/index.html%'
+    or uri like '%bulas%'
+    or uri like '%Bulas%'
+    or uri like '%remedios-caseiros%') 
+
+    or (host_name like '%idmed.terra.com.br%' AND uri like '%%'
+    or host_name like '%saude.ig.com.br%' AND uri like '%%'
+    or host_name like '%boasaude.com.br%' AND uri like '%%'
+    or host_name like '%gineco.com.br%' and uri like '%%'
+    or host_name like '%medicoresponde.com.br%' and uri like '%%'
+    or host_name like '%valemaissaude.com.br%' and uri like '%%'
+    or host_name like '%guiasaude.org%' and uri like '%%'
+    or host_name like '%minhavida.com.br%' and uri like '%%') 
+)
+
+then 'Saude'
+
+when(
+
+     (host_name like '%colgate%'
+     or host_name like '%gengiva.com%'
+     or host_name like '%oralb.com%'
+     or host_name like '%osascodagente.com%')
+)
+
+then 'Saude Bucal'
+
+
+when(
+
+    (uri like '%beleza%'
+    or uri like '%moda-e-beleza%')
+
+    or (host_name like '%beleza.terra.com.br%' AND uri like '%%'
+    or host_name like '%belezanaweb.com.br%' and uri like '%%'
+    or host_name like '%novidadesdebeleza.com.br%' and uri like '%%'
+    or host_name like '%beautyrock.com.br%' and uri like '%%'
+    or host_name like '%belezainteligente.com.br%' and uri like '%%'
+    or host_name like '%euacreditoemcosmeticos.com%' and uri like '%%'
+    or host_name like '%mulherbeleza.com.br%' and uri like '%%'
+    or host_name like '%msn.com%' and uri like '%estilo-de-vida%')
+
+)
+
+then 'Beleza'
+
+when(
+
+    (uri like '%mulher%'
+    or uri like '%Mulher%'
+    or uri like '%mulheres%')
+
+    or (host_name like '%mulher.uol.com.br%' and uri like '%%'
+    or host_name like '%mdemulher.abril.com.br%' AND uri like '%%'
+    or host_name like '%delas.ig.com.br%' AND uri like '%%'
+    or host_name like '%discoverymulher.uol.com.br%' and uri like '%%'
+    or host_name like '%mulher.terra.com.br%' and uri like '%%'
+    or host_name like '%bolsademulher.com%' and uri like '%%'
+    or host_name like '%dicasdemulheres.com%' and uri like '%%'
+    or host_name like '%mulheresdicas.com%' and uri like '%%'
+    or host_name like '%mundomulher.com.br%' and uri like '%%'
+    or host_name like '%universofeminino%' and uri like '%%'
+    or host_name like '%mulher.yahoo.com%' and uri like '%%')
+)
+
+then 'Mulher'
+
+when host_name like '%deles.ig.com.br%' then 'Homem'
+
+when( 
+
+(host_name like '%saude.terra.com.br%' AND uri like '%%'
+
+or host_name like '%r7.minhavida.com.br%' AND uri like '%%' 
+
+or host_name like '%minhavida.com.br%' AND uri like '%%' 
+
+or host_name like '%doutissima.com.br%' AND uri like '%%' 
+
+or host_name like '%tuasaude.com%' AND uri like '%%'
+
+or host_name like '%institutosaopaulo.com.br%' and uri like '%%')
+) 
+
+then 'Portal'
+
+when host_name like '%vivo.netfarma.com.br%' AND uri like '%%' then 'Vivo NetFarma'
+
+when host_name like '%vivomaissaudavel.com.br%' AND uri like '%%' then 'Vivo Mais Saudavel'
+
+
+
+END AS categoria from tbgdt_stg_dpi
+
+
+
+where
+
+((msisdn <> 'NA' or msisdn is not null or length(msisdn)>0)
+     and  (host_name <> 'NA' or host_name is not null or length(host_name)>0))
+
+and(
+   (host_name like '%abcdasaude.com.br%' and uri like '%sexologia%')
+or (host_name like '%abcvida.org.br%' and uri like '%convivencia_terceira_idade%')
+or (host_name like '%abqv.com.br%')
+or (host_name like '%acreditabonita.com.br%')
+or (host_name like '%adolescencia.org.br%' and uri like '%sexualidade%')
+or (host_name like '%adrianeboneck.com.br%')
+or (host_name like '%aeducacaosexual.blogspot.com.br%')
+or (host_name like '%alelocomerbemtdb.com.br%' and uri like '%movimente-se%')
+or (host_name like '%alertasaude24horas.com.br%')
+or (host_name like '%alimentacao-infantil.info%')
+or (host_name like '%alimentacao-saudavel.com%')
+or (host_name like '%alimentacaosaudavel.org%')
+or (host_name like '%americanas.com.br%' and uri like '%brinquedo%')
+or (host_name like '%anutricionista.com%')
+or (host_name like '%apl.unisuam.edu.br%' and uri like '%portal/modules.php?name=News&file=article&site=2&sid=426%')
+or (host_name like '%apoiocr.com.br%')
+or (host_name like '%aromaemagia.com.br%')
+or (host_name like '%asreceitassaudaveis.com%')
+or (host_name like '%assertbrasil.com.br%' and uri like '%alimentacao-saudavel%')
+or (host_name like '%atendimento.portoseguro.com.br%' and uri like '%seguro-de-vida-terceira-idade%')
+or (host_name like '%aterceiraidade.com%' and uri like '%turismo%')
+or (host_name like '%atrasonafala.com.br%')
+or (host_name like '%authenticfeet.com.br%' and uri like '%corrida%')
+or (host_name like '%beautyrock.com.br%')
+or (host_name like '%bebe.abril.com.br%')
+or (host_name like '%bebestore.com.br%')
+or (host_name like '%beleza.terra.com.br%')
+or (host_name like '%belezainteligente.com.br%')
+or (host_name like '%belezanaweb.com.br%')
+or (host_name like '%belezatresemme.ig.com.br%')
+or (host_name like '%bfit.com.br%')
+or (host_name like '%bioimis.com.br%')
+or (host_name like '%bioritmo.com.br%')
+or (host_name like '%blogdamimis.com.br%')
+or (host_name like '%blogdasaude.com.br%')
+or (host_name like '%boaforma.uol.com.br%')
+or (host_name like '%boasaude.com.br%')
+or (host_name like '%bodytech.com.br%')
+or (host_name like '%bolsademulher.com%')
+or (host_name like '%bonami.com.br%')
+or (host_name like '%br.mulher.yahoo.com%')
+or (host_name like '%brasil.babycenter.com%')
+or (host_name like '%brasilescola.com%' and uri like '%saude-na-escola%')
+or (host_name like '%brasilesoterico.com%')
+or (host_name like '%btgviagens.com.br%' and uri like '%melhor-idade%')
+or (host_name like '%bymarina.com.br%')
+or (host_name like '%calcularpesoideal.com.br%')
+or (host_name like '%capricho.abril.com.br%' and uri like '%beleza%')
+or (host_name like '%capricho.abril.com.br%' and uri like '%horoscopo%')
+or (host_name like '%cardapiodobebe.com.br%')
+or (host_name like '%carlacecarello.com%')
+or (host_name like '%carlosklein.com.br%')
+or (host_name like '%carolbuffara.com.br%')
+or (host_name like '%carolmagalhaes.com%')
+or (host_name like '%casa.repouso.residencecare.com.br%')
+or (host_name like '%casaderepousobemviver.com.br%')
+or (host_name like '%casaderepousocoracaojesus.com.br%')
+or (host_name like '%casaderepousodepaula.com.br%')
+or (host_name like '%casaderepousoelite.com.br%')
+or (host_name like '%casaderepousonewlife.com.br%')
+or (host_name like '%casaderepousopaesdebarros.com.br%')
+or (host_name like '%casaderepousovidaesaude.com.br%')
+or (host_name like '%casaderepousovillalobos.com.br%')
+or (host_name like '%casaderepousovivabem.com.br%')
+or (host_name like '%cea.com.br%' and uri like '%moda-infantil%')
+or (host_name like '%centauro.com.br%')
+or (host_name like '%cepe.usp.br%' and uri like '%terceira-idade%')
+or (host_name like '%ciaathletica.com.br%')
+or (host_name like '%ciadoidoso.com.br%')
+or (host_name like '%cidadao.sp.gov.br%' and uri like '%serv=303956%')
+or (host_name like '%cinthetur.com.br%' and uri like '%terceira-idade%')
+or (host_name like '%circulodediana.com.br%')
+or (host_name like '%clickjogos.com.br%')
+or (host_name like '%clinicacherubins.com.br%')
+or (host_name like '%colgate.com.br%')
+or (host_name like '%comersaudavel.blogspot%')
+or (host_name like '%comersempeso.com%')
+or (host_name like '%compuclass.com.br%' and uri like '%Curso=Terceira%')
+or (host_name like '%corpoematividade.com%')
+or (host_name like '%cortesepenteados.com.br%')
+or (host_name like '%criancas.uol.com.br%')
+or (host_name like '%crispoli.com.br%')
+or (host_name like '%cristaisaquarius.com.br%')
+or (host_name like '%cuidardeidosos.com.br%')
+or (host_name like '%cursostk.com%')
+or (host_name like '%cvbsp.org.br%')
+or (host_name like '%cvc.com.br%' and uri like '%melhor-idade%')
+or (host_name like '%cyberdiet.com.br%')
+or (host_name like '%dafiti.com.br%' and uri like '%infantil%')
+or (host_name like '%dafiti.com.br%' and uri like '%esporte%')
+or (host_name like '%daniellafaria.com.br%')
+or (host_name like '%danonebaby%')
+or (host_name like '%danonenutricao.com.br%')
+or (host_name like '%decathlon.com.br%')
+or (host_name like '%delas.ig.com.br%')
+or (host_name like '%deles.ig.com.br%')
+or (host_name like '%dicasdecabelo.com.br%')
+or (host_name like '%dicasdemulheres.com%')
+or (host_name like '%dicasdetreino.com.br%')
+or (host_name like '%dietaja.uol.com.br%')
+or (host_name like '%dietapontos.com.br%')
+or (host_name like '%dietadukan.com.br%')
+or (host_name like '%dietaemagrecerurgente.com%')
+or (host_name like '%dietaenteral.com.br%')
+or (host_name like '%dietaesaude.com.br%')
+or (host_name like '%dietasobcontrole.org%')
+or (host_name like '%discoverymulher.uol.com.br%')
+or (host_name like '%djovia.com.br%')
+or (host_name like '%domcuidadores.com.br%')
+or (host_name like '%doutissima.com.br%')
+or (host_name like '%doutorgourmet.com%')
+or (host_name like '%drauziovarella.com.br%' and uri like '%sexualidade%')
+or (host_name like '%drjairobouer.blog.uol%')
+or (host_name like '%educacaofisica.com.br%')
+or (host_name like '%ego.globo.com%' and uri like '%beleza%')
+or (host_name like '%emagrecerdicas.com.br%')
+or (host_name like '%encontraipiranga.com.br%' and uri like '%centro-de-convivencia-3-idade%')
+or (host_name like '%esotera.com.br%')
+or (host_name like '%esotericaonline.com.br%')
+or (host_name like '%espacoyoga.com.br%')
+or (host_name like '%estacaofitness.com.br%')
+or (host_name like '%euacreditoemcosmeticos.com%')
+or (host_name like '%exercitandosaude.com.br%')
+or (host_name like '%extra.com.br%' and uri like '%Suplemento%')
+or (host_name like '%extra.globo.com%' and uri like '%mulher%')
+or (host_name like '%fabiomedina.com.br%')
+or (host_name like '%formulaacademia.com.br%')
+or (host_name like '%friendscare.com.br%')
+or (host_name like '%g1.globo.com%' and uri like '%bemestar/alimentacao%')
+or (host_name like '%gengiva.com%')
+or (host_name like '%geriatrics.com.br%' and uri like '%homecare%')
+or (host_name like '%gineco.com.br%')
+or (host_name like '%globodicas.com.br%' and uri like '%cabelo%')
+or (host_name like '%globoesporte.globo.com%' and uri like '%eu-atleta%')
+or (host_name like '%gnt.globo.com%' and uri like '%alimentacao-infantil%')
+or (host_name like '%gnt.globo.com%' and uri like '%gravidez%')
+or (host_name like '%grupobem.com.br%')
+or (host_name like '%guiadadieta.com.br%')
+or (host_name like '%guiafitness.com%')
+or (host_name like '%guia-fitness.com%')
+or (host_name like '%guiasaude.org%')
+or (host_name like '%gulosoesaudavel.com.br%')
+or (host_name like '%gympass.com%')
+or (host_name like '%healthyhairclinic.com.br%')
+or (host_name like '%helpcarebrasil.com.br%')
+or (host_name like '%helpdoscabelos.com%')
+or (host_name like '%homeangels.com.br%')
+or (host_name like '%homedoctor.com.br%')
+or (host_name like '%hotelfazendasolardasandorinhas.com%' and uri like '%terceira_idade%')
+or (host_name like '%ibit.com.br%' and uri like '%informatica-para-terceira-idade%')
+or (host_name like '%idmed.terra.com.br%')
+or (host_name like '%igkids.ig.com.br%')
+or (host_name like '%impacta.com.br%' and uri like '%informatica-para-Melhor-Idade%')
+or (host_name like '%indicedemassacorporal.com%')
+or (host_name like '%institutodocabelo.com.br%')
+or (host_name like '%institutosaopaulo.com.br%')
+or (host_name like '%institutouniao.com.br%' and uri like '%yoga%')
+or (host_name like '%jeanpiaget.g12.br%' and uri like '%educacaoinfantil%')
+or (host_name like '%kanui.com.br%')
+or (host_name like '%lauramuller.com.br%')
+or (host_name like '%lifefirst.com.br%')
+or (host_name like '%lightesaude.com.br%')
+or (host_name like '%lojamelissa.com.br%' and uri like '%infantil%')
+or (host_name like '%lojasrenner.com.br%' and uri like '%infantil%')
+or (host_name like '%lojaviasol.com.br%')
+or (host_name like '%lucianarizo.com.br%')
+or (host_name like '%maferhomecare.com.br%')
+or (host_name like '%magazineluiza.com.br%' and uri like '%brinquedo%')
+or (host_name like '%magiccity.com.br%' and uri like '%melhor-idade%')
+or (host_name like '%maisemforma.com.br%')
+or (host_name like '%malweelojavirtual.com.br%' and uri like '%malwee/infantil%')
+or (host_name like '%mandalaesoterica.com.br%')
+or (host_name like '%maniasemanias.com%')
+or (host_name like '%maquiagem.art.br%')
+or (host_name like '%marcioatalla.com.br%')
+or (host_name like '%mariabarriga.com.br%')
+or (host_name like '%maternar.blogfolha.uol.com.br%')
+or (host_name like '%mauriciomorelli.com%')
+or (host_name like '%mdemulher.abril.com.br%')
+or (host_name like '%medicinageriatrica.com.br%')
+or (host_name like '%medicoresponde.com.br%')
+or (host_name like '%metododerose.org%')
+or (host_name like '%meupratosaudavel.com.br%')
+or (host_name like '%minhavida.com.br%')
+or (host_name like '%mistsul.com.br%')
+or (host_name like '%moda.terra.com.br%')
+or (host_name like '%mondayacademia.com.br%')
+or (host_name like '%moocacasaderepouso.com.br%')
+or (host_name like '%moradadosolcr.com.br%')
+or (host_name like '%movimenteseconsult.com.br%')
+or (host_name like '%movimenteseucorpo.blogspot.com.br%')
+or (host_name like '%mpbrinquedos.com.br%')
+or (host_name like '%mulher.terra.com.br%')
+or (host_name like '%mulher.uol.com.br%')
+or (host_name like '%mulher.yahoo.com%')
+or (host_name like '%mulherbeleza.com.br%')
+or (host_name like '%mulheresdicas.com%') 
+or (host_name like '%mundodaintimidade.com.br%')
+or (host_name like '%mundoeducacao.com%' and uri like '%alimentacao-saudavel%')
+or (host_name like '%mundomulher.com.br%')
+or (host_name like '%musculacaobrasil.com%')
+or (host_name like '%nefertitionline.com.br%')
+or (host_name like '%nestle.com.br%' and uri like '%pais-e-filhos%')
+or (host_name like '%netshoes.com.br%')
+or (host_name like '%new.reebokclub.com.br%')
+or (host_name like '%newcenterbrinquedos.com.br%')
+or (host_name like '%nike.com%')
+or (host_name like '%novidadesdebeleza.com.br%')
+or (host_name like '%www.oralb.com%')
+or (host_name like '%oreidasvelas.com.br%')
+or (host_name like '%osascodagente.com%' and uri like '%dentista%')
+or (host_name like '%paiefilhoja.com.br%')
+or (host_name like '%panvel.com%' and uri like '%categoria=159%')
+or (host_name like '%pbkids.com.br.com.br%')
+or (host_name like '%pediatriaemfoco.com.br%')
+or (host_name like '%personare.com.br%' and uri like '%saude-e-alimentacao%')
+or (host_name like '%pilates.com.br%')
+or (host_name like '%planetsport.com.br%')
+or (host_name like '%pontofrio.com.br%' and uri like '%Suplementos%')
+or (host_name like '%portal.metodista.br%' and uri like '%terceiraidade%')
+or (host_name like '%portalamigodoidoso.com.br%' and uri like '%cursos%')
+or (host_name like '%portalcasasderepouso.com.br%')
+or (host_name like '%portaldasexualidade.com.br%')
+or (host_name like '%portalterceiraidade.org.br%' and uri like '%cursos_atividades%')
+or (host_name like '%prepara.com.br%' and uri like '%informatica-melhor-idade%')
+or (host_name like '%procorrer.com.br%')
+or (host_name like '%provida.org.br%')
+or (host_name like '%psgnutricaoecia.blogspot.com.br%' and uri like '%orientacao-infantil%')
+or (host_name like '%qualicorpcuidadores.com.br%')
+or (host_name like '%r7.minhavida.com.br%')
+or (host_name like '%realcaresaude.com.br%')
+or (host_name like '%recantodasflores-sp.com.br%')
+or (host_name like '%recantomontealegre.com.br%')
+or (host_name like '%repousodocelar.com.br%')
+or (host_name like '%residencialagape.com.br%')
+or (host_name like '%residencialmaster.com.br%')
+or (host_name like '%residencialparquedasflores.com.br%')
+or (host_name like '%revistaescola.abril.com%' and uri like '%creche-pre-escola%')
+or (host_name like '%revistashape.uol.com.br%')
+or (host_name like '%revistashape.uol.com.br%')
+or (host_name like '%rihappy.com.br%')
+or (host_name like '%roupasdegravidas.com.br%')
+or (host_name like '%runningnews.com.br%' and uri like '%dicas-de-treinamento%')
+or (host_name like '%sadia.com.br%' and uri like '%alimentacao+saudavel%')
+or (host_name like '%saude.ig.com.br%')
+or (host_name like '%saudeeforca.com%')
+or (host_name like '%saude.terra.com.br%')
+or (host_name like '%saudeemmovimento.com.br%')
+or (host_name like '%saudeesportiva.com.br%')
+or (host_name like '%www.sbt.com.br%' and uri like '%supernanny%')
+or (host_name like '%sescsp.org.br%' and uri like '%busca-por-atividades/%')
+or (host_name like '%sexplicando.com%')
+or (host_name like '%shoptime.com.br%' and uri like '%monitor-cardiaco%')
+or (host_name like '%sindicatodosaposentados.org.br%')
+or (host_name like '%smartfit.com.br%')
+or (host_name like '%solangefrazao.com.br%')
+or (host_name like '%soshomecare.com.br%')
+or (host_name like '%sp.senac.br%' and uri like '%selectCourse&course=2728&template=null.dwt&unit=NONE&testeira=996%') 
+or (host_name like '%sportsonline.com.br%' and uri like '%category&path=71%')
+or (host_name like '%starpoint.com.br%')
+or (host_name like '%suacorrida.com.br%')
+or (host_name like '%suadieta.com.br%')
+or (host_name like '%submarino.com.br%' and uri like '%infantil%' or uri like '%brinquedo%')
+or (host_name like '%sustagennutriferro.com.br%')
+or (host_name like '%taniascripilliti.com.br%' and uri like '%familiarcuidador%')
+or (host_name like '%teleassistencia.com.br%')
+or (host_name like '%tendadaalma.com%')
+or (host_name like '%tips4life.com.br%')
+or (host_name like '%topbrasilseguros.com.br%' and uri like '%seguro-de-vida-terceira-idade%')
+or (host_name like '%toymania.com.br%')
+or (host_name like '%tuasaude.com%')
+or (host_name like '%tudodemaquiagem.com%')
+or (host_name like '%tudosobreesmaltes.com%')
+or (host_name like '%tvgazeta.com.br%' and uri like '%mulheres%')
+or (host_name like '%universofeminino%')
+or (host_name like '%uni-yoga.org.br%')
+or (host_name like '%usesp.org.br%')
+or (host_name like '%valemaissaude.com.br%')
+or (host_name like '%vegetarianismo.com.br%')
+or (host_name like '%venturas.com.br%' and uri like '%Melhor-Idade%')
+or (host_name like '%viajamais.gov.br%')
+or (host_name like '%viaverdenaturais.com.br%')
+or (host_name like '%vidadeturista.com%' and uri like '%terceira-idade%')
+or (host_name like '%vidaeestilo.terra.com.br%' and uri like '%alimentacao-infantil%')
+or (host_name like '%vidaeestilo.terra.com.br%' and uri like '%horoscopo%')
+or (host_name like '%vigilantesdopeso.com.br%')
+or (host_name like '%vivo.netfarma.com.br%')
+or (host_name like '%vivomaissaudavel.com.br%')
+or (host_name like '%walmart.com.br%' and uri like '%monitores-cardiacos%')
+or (host_name like '%wtennis.com.br%' and uri like '%esporte%')
+or (host_name like '%www.adidas.com.br%')
+or (host_name like '%www.dx.com%' and uri like '%cell-phones-accessories-599/gadgets-507%')
+or (host_name like '%www.runner.com.br%')
+or (host_name like '%www.uva.br%' and uri like '%terceira-idade%')
+or (host_name like '%zazou.com.br%')
+or (host_name like '%vegetarianos.com.br%')
+or (host_name like '%noticias.uol.com.br%' and uri like '%saude%')
+or (host_name like '%entretenimento.r7.com%' and uri like '%mulher%')
+or (host_name like '%msn.com%' and uri like '%pt-br/saude%')
+or (host_name like '%msn.com%' and uri like '%pt-br/estilo-de-vida%')
+or (host_name like '%g1.globo.com%' and uri like '%ciencia-e-saude/index%')
+or (host_name like '%g1.globo.com%' and uri like '%bemestar/index%')
+or (host_name like '%g1.globo.com%' and uri like '%atividade-fisica%')
+);
+
+    
+   
+   
+    
+
+------------------------------------------
+
+create table jaf_cat_comp_novo3 (
+procedure_duration string,
+msisdn string,
+uri string,
+mean_throughput_ul string,
+mean_throughput_dl string,
+total_ul_frames string,
+total_dl_frames string,
+total_data_ul string,
+total_data_dl string,
+host_name string,
+cgi string,
+cell_id string,
+session_duration string,
+categoria string
+);
+
+insert into table jaf_cat_comp_novo3
+select
+
+procedure_duration,
+msisdn,
+uri,
+mean_throughput_ul,
+mean_throughput_dl,
+total_ul_frames,
+total_dl_frames,
+total_data_ul,
+total_data_dl,
+host_name,
+cgi,
+cell_id,
+session_duration,
+
+case
+
+when(
+
+    (uri like '%esoterico%'
+    or uri like '%horoscopo%')
+
+    or (host_name like '%mundomystiko.com.br%' and uri like '%%'
+    or host_name like '%focusesoterismo.com.br%' and uri like '%%'
+    or host_name like '%vidatarot.com.br%' and uri like '%%'
+    or host_name like '%yahoo.estrelaguia.com.br%' and uri like '%%'
+    or host_name like '%horoscopovirtual.uol.com.br%' and uri like '%%'
+    or host_name like '%personare.com%' and uri like '%%'
+    or host_name like '%portalangels.com%' and uri like '%%'
+    or host_name like '%tarotdoamor.com.br%' and uri like '%%'
+    or host_name like '%tarotonlinegratis.com.br%' and uri like '%%'
+    or host_name like '%clubedotaro.com.br%' and uri like '%%'
+    or host_name like '%astrocentro.com.br%' and uri like '%%'
+    or host_name like '%oraculosweb.com.br%' and uri like '%%'
+    or host_name like '%visaoastral.com.br%' and uri like '%%'
+    or host_name like '%portalesoterico.com.br%' and uri like '%%'
+    or host_name like '%estrelafone.com.br%' and uri like '%%'
+    or host_name like '%planetaesoterico.com.br%' and uri like '%%'
+    or host_name like '%venturaesoterico.com.br%' and uri like '%%'
+    or host_name like '%lotusesoterismo.com.br%' and uri like '%%'
+    or host_name like '%magyamistica.com.br%' and uri like '%%'
+    or host_name like '%joaobidu.com.br%' and uri like '%%'
+    or host_name like '%revistaesoterica.com.br%' and uri like '%%'
+    or host_name like '%bemzen.uol.com.br%' and uri like '%%'
+    or host_name like '%paiogun.com%' and uri like '%%'
+    or host_name like '%somostodosum.ig.com.br%' and uri like '%%'
+    or host_name like '%horoscopovirtual.uol.com.br%' and uri like '%%'
+    or host_name like '%isabelmueller.com.br%' and uri like '%%'
+    or host_name like '%simpatiadeamor.com%' and uri like '%%'
+    or host_name like '%amarracaomagia.com.br%' and uri like '%%'
+    or host_name like '%amarracaoamorosa7dias.com.br%' and uri like '%%'
+    or host_name like '%amoreamarracao.com%' and uri like '%%'
+    or host_name like '%amarracaogratis.com%' and uri like '%%'
+    or host_name like '%uniaoamorosa.com%' and uri like '%%'
+    or host_name like '%horoscopodiario.com.br%' and uri like '%%'
+    or host_name like '%horoscopo.ego.globo.com%' and uri like '%%'
+    or host_name like '%aparecidaliberato.terra.com.br%' and uri like '%%'
+    or host_name like '%numerologiadonome.com%' and uri like '%%'
+    or host_name like '%ofengshui.com.br%' and uri like '%%'
+    or host_name like '%magiadosoraculos.com%' and uri like '%%'
+    or host_name like '%divinoamor.com.br%' and uri like '%%'
+    or host_name like '%astro.com%' and uri like '%%'
+    or host_name like '%isabelafreitas.com.br%' and uri like '%%'
+    or host_name like '%caminhosdosol.com.br%' and uri like '%%')
+)
+
+then 'Esoterico'
+
+when(
+
+    (host_name like '%sorridents.com.br%' and uri like '%%'
+    or host_name like '%unimedodonto.com.br%' and uri like '%%'
+    or host_name like '%meu-plano-odonto%' and uri like '%%'
+    or host_name like '%amilplanosodontologicos.com.br%' and uri like '%%'
+    or host_name like '%sorrifacil.com.br%' and uri like '%%'
+    or host_name like '%dentistas24h.com%' and uri like '%%'
+    or host_name like '%odontovip.net%' and uri like '%%'
+    or host_name like '%agamiodontologia.com.br%' and uri like '%%'
+    or host_name like '%odontosaopaulo.com.br%' and uri like '%%'
+    or host_name like '%home.odontosystem.com.br%' and uri like '%%'
+    or host_name like '%selectodonto.com.br%' and uri like '%%'
+    or host_name like '%soespodonto.com.br%' and uri like '%%'
+    or host_name like '%odontoexcellence.com.br%' and uri like '%%'
+    or host_name like '%odontoprev.com.br%' and uri like '%%'
+    or host_name like '%iarossi.com.br%' and uri like '%Dentista%'
+    or host_name like '%odontospex.com.br%' and uri like '%%'
+    or host_name like '%odontohealth.com.br%' and uri like '%%'
+    or host_name like '%odontoplus.com.br%' and uri like '%%'
+    or host_name like '%odontologiamazaro.com.br%' and uri like '%%')
+)
+
+then 'Odontologia'
+
+when (
+
+     (uri like '%suplementos%' 
+     or uri like '%Suplementos%'
+     or uri like '%shape%'
+     or uri like '%musculacao%'
+     or uri like '%Musculacao%'
+     or uri like '%nutricao%'
+     or uri like '%fitness%' 
+     or uri like '%Fitness%'
+     or uri like '%dieta%')
+
+     or(host_name like '%panvel.com%' AND uri like '%/panvel/main.do?categoria=9&%' 
+     or host_name like '%drogasil.com.br%' AND uri like '%DrogasilEcommWeb/CarregarVitrineSegundoNivel.do?cdMenu=13'
+     or host_name like '%lojavitalsuplementos.com.br%' AND uri like '%%'
+     or host_name like '%lojadosuplemento.com.br%' AND uri like '%%'
+     or host_name like '%madrugaosuplementos.com.br%' AND uri like '%%'
+     or host_name like '%sosuplementos.com.br%' AND uri like '%%'
+     or host_name like '%corpoidealsuplementos.com.br%' AND uri like '%%'
+     or host_name like '%drshapesuplementos.com.br%' AND uri like '%%'
+     or host_name like '%corpoperfeito.com.br%' AND uri like '%%'
+     or host_name like '%corpoevidashop.com.br%' AND uri like '%%'
+     or host_name like '%fortaosuplementos.com.br%' AND uri like '%%'
+     or host_name like '%fabricadesuplementos.com.br%' AND uri like '%%'
+     or host_name like '%nutrimundo.com.br%' AND uri like '%%' 
+     or host_name like '%maxtitanium.com.br%' AND uri like '%%'
+     or host_name like '%ultrafitness.com.br%' AND uri like '%%'
+     or host_name like '%centralfit.com.br%' AND uri like '%%'
+     or host_name like '%naturelifenutricao.com.br%' AND uri like '%%'
+     or host_name like '%nutriallsuplementos.com%' AND uri like '%%'
+     or host_name like '%bioderm.com.br%' AND uri like '%%'
+     or host_name like '%kanui.com.br%'
+     or host_name like '%www.saudeja.com.br%')
+)
+
+then 'Suplementos'
+
+
+when( 
+    
+    (uri like '%diet%' 
+    or uri like '%Diet%')
+)
+
+then 'Diet e Light'
+
+when(
+
+    (uri like '%nutricao%'
+    or uri like '%Nutrição%'
+    or uri like '%Alimentos%'
+    or uri like '%alimentos%')
+
+    or (host_name like '%panvel.com%' AND uri like '%/panvel/main.do?categoria=8&%') 
+)
+
+then 'Nutrição'
+
+when (uri like '%suplementos/emagrecimento%') then 'Emagrecedores'
+
+
+when(
+
+     (uri like '%Perfume%'
+     or uri like '%perfume%'
+     or uri like '%Perfumaria%'
+     or uri like '%perfumaria%')
+)
+
+then 'Perfumes'
+
+when(
+
+    (uri like '%Higiene%' 
+    or uri like '%higiene%'
+    or uri like '%HIGIENE%'
+    or uri like '%sabonete%'
+    or uri like '%creme%'
+    or uri like '%cuidados-pessoais%'
+    or uri like '%corpo-e-banho%'
+    or uri like '%desodorante%'
+    or uri like '%hidratante%')
+
+    or (host_name like '%drogasil.com.br%' AND uri like '%/DrogasilEcommWeb/index.do?cdModulo=4%' or host_name like '%panvel.com%' AND uri like '%/panvel/main.do?categoria=5&%')
+)
+ 
+then 'Higiene Pessoal'
+
+when (uri like '%corpo-e-banho%') then 'Corpo e Banho'
+
+when (uri like '%Corpo_e_Rosto%') then 'Corpo e Rosto'
+
+when (uri like '%Anti-idade%') then 'Anti-Idade'
+
+
+when (host_name like '%ultrafarma.com.br%' AND uri like '%/categoria-85/ordem-1/pagina-1/M%C3%A3os_e_P%C3%A9s.html%') then 'Mãos e Pele'
+
+when (
+    (uri like '%rosto%'
+    or uri like '%Rosto%')
+)
+
+then 'Rosto'
+
+when(
+
+    (uri like '%Esmalte%'
+    or uri like '%esmalte%')
+)
+
+then 'Esmaltes'
+
+when(
+
+    (uri like '%Cabelo%'
+    or uri like '%cabelo%'
+    or uri like '%shampoo%'
+    or uri like '%condicionador%'
+    or uri like '%pentear%')
+   
+    or(host_name like '%ultrafarma.com.br%' AND uri like '%/categoria-74/ordem-1/pagina-1/Tinturas.html%') 
+)
+
+then 'Cabelo'
+
+when(
+
+    (uri like '%Maquiage%' 
+    or uri like '%maquiage%'
+    or uri like '%batom%'
+    or uri like '%demaquilante%')
+)
+
+then 'Maquiagem'
+
+
+when( 
+
+    (uri like '%Beleza%' 
+    or uri like '%beleza%'
+    or uri like '%rejuvenescedor%')
+
+    or(host_name like '%drogasil.com.br%' AND uri like '%/DrogasilEcommWeb/index.do?cdModulo=3%' 
+    or host_name like '%panvel.com%' AND uri like '%/panvel/main.do?categoria=2&%'
+    or host_name like '%www.natura.com.br%' AND uri like '%%' 
+    or host_name like '%jequiti.com.br%' AND uri like '%%' 
+    or host_name like '%boticario.com.br%' AND uri like '%%'
+    or host_name like '%avon.com.br%' AND uri like '%%')
+)
+
+   then 'Beleza'
+
+when ( 
+
+    (uri like '%Dermocosmetico%' 
+    or uri like '%dermocosmetico%') 
+    or (host_name like '%netfarma.com.br' AND uri like '%/categoria.asp?idcategoria=1632&nivel=05&categoria=Dermocosm%E9ticos&topo=s%' or host_name like '%panvel.com%' AND uri like '%/panvel/main.do?categoria=4&%') 
+)
+
+then 'Dermocosmeticos'
+
+
+when(
+    
+    (uri like '%aparelhos-e-testes%'
+     or uri like '%testes-e-aparelho%'	 
+     or uri like '%Aparelhos+e+Testes%'
+     or uri like '%Aparelhos e Testes%') 
+)
+
+then 'Aparelhos e Testes'
+
+when(
+
+    (uri like '%monitores-cardiacos%'
+    or uri like '%monitor-cardico%'
+    or uri like '%pedometro%'
+    or uri like '%pedometer%')
+    
+    or (host_name like '%garmin.com%' 
+    or host_name like '%polar.com%'
+    or host_name like '%nike.com%' 
+    or host_name like '%carenet.com.br%' and uri like '%klip%'
+    or host_name like '%speedo.com.br%' and uri like '%produtos/produto/cod/955%')
+)
+
+
+then 'Monitor Cardiaco'
+
+
+when(
+
+    (host_name like '%lge.com%' and uri like '%wearables%'
+    or host_name like '%samsung.com%' and uri like '%cellular-phone/convergence/rel%C3%B3gios-inteligentes%')
+)
+
+then 'Smart Watch'
+
+
+when(
+
+    (uri like '%Medicamento%'
+    or uri like '%medicamento%'
+    or uri like '%comprimido%'
+    or uri like '%Comprimido%'
+    or uri like '%bula%'
+    or uri like '%Bula%'
+    or uri like '%BULA%')
+
+    or (host_name like '%drogasil.com.br%' AND uri like '%/DrogasilEcommWeb/index.do?cdModulo=1%' or host_name like '%drogariasaopaulo.com.br%' AND uri like '%/index.php?seo=/farmacia/&controle=004_shopping_busca&CODIBANE=91&N1=1&VIEWTYPE=T%' or host_name like '%panvel.com%' AND uri like '%/main.do?categoria=1&%') 
+)
+
+then 'Medicamentos'
+
+
+when (uri like '%medicamentos/alergia%') then 'Alergia e Infecção'
+
+when (uri like '%hipertensao%') then 'Hipertensão'
+
+when (
+
+    (uri like '%Colesterol%'
+    or uri like '%colesterol%'
+    or uri like '%Triglicer%'
+    or uri like '%triglicer%')
+)     
+
+then 'Colesterol'
+
+
+when ( 
+
+     (uri like '%Diabetes%' 
+     or uri like '%diabetes%'
+     or uri like '%DIABETES%')
+   
+     or (host_name like '%panvel.com%' AND uri like '%/panvel/main.do?categoria=14&%') 
+)
+
+then 'Diabetes'
+
+
+when(
+
+    (uri like '%Fumar%'
+    or uri like '%fumar%'
+    or uri like '%FUMAR%'
+    or uri like '%fumante%'
+    or uri like '%Fumante%'
+    or uri like '%nicotina%'
+    or uri like '%Nicotina%')
+
+    or (host_name like '%drogasil.com.br%' AND uri like '%/DrogasilEcommWeb/CarregarVitrineTerceiroNivelAlfabeticoComListaMarcas.do?cdMenu=51%'
+    or host_name like '%panvel.com%' and uri like '%/panvel/main.do?categoria=84%'
+    or host_name like '%niquitin.com.br%' and uri like '%%')
+)
+
+then 'Fumante'
+
+when (uri like '%osteoporose%') then 'Osteoporose'
+
+when (uri like '%calcio%') then 'Calcio'
+
+
+when(
+
+    (uri like '%pressao-alta%'
+    or uri like '%Pressao-alta%'
+    or uri like '%press%c3%A3o_alta%'
+    or uri like '%Press%C3%A3o_alta%'
+    or uri like '%pressao+alta%'
+    or uri like '%Pressao+alta%')
+)
+
+then 'Pressão Alta'
+
+when(
+
+    (uri like '%Respirat%F3rio%'
+    or uri like '%respiratorio%'
+    or uri like '%Respiratorio%'
+    or uri like '%asma%'
+    or uri like '%Asma%'
+    or uri like '%bronquite%')
+)
+
+then 'Respiratorio' 
+
+when(
+
+    (uri like '%ortopedia%'
+    or uri like '%Ortopedia%')
+
+    or (host_name like '%panvel.com%' AND uri like '%/panvel/main.do?categoria=10&%') 
+)
+
+then 'Ortopedia'
+
+when(
+
+    (uri like '%geriatrico%'
+    or uri like '%geriatria%')
+
+    or (host_name like '%drogasil.com.br%' and uri like '%DrogasilEcommWeb/CarregarVitrineTerceiroNivelAlfabeticoComListaMarcas.do?cdMenu=105%'
+    or host_name like '%medicinageriatrica.com%' and uri like '%%')
+)
+
+then 'Geriatrico'
+
+when(
+
+    (host_name like '%prudentsenior.com.br%' and uri like '%%'
+    or host_name like '%helpcarebrasil.com.br%' and uri like '%%'
+    or host_name like '%telehelp.com.br%' and uri like '%%'
+    or host_name like '%gradiente.com.br%' and uri like '%safephone%'
+    or host_name like '%celldesign.com.br%' and uri like '%1707%'
+    or host_name like '%desca.com%' and uri like '%products_brazalete%'
+    or host_name like '%teleassistencia24.com%' and uri like '%%'
+    or host_name like '%semaxdailycare.com.br%' and uri like '%%'
+    or host_name like '%keruve.com.br%' and uri like '%%')
+)
+
+then 'Teleassistencia'
+
+when(
+
+    (uri like '%gravidez%'
+    or uri like '%Gravidez%'
+    or uri like '%gravida%'
+    or uri like '%Gravida%'
+    or uri like '%Gestante%'
+    or uri like '%gestante%'
+    or uri like '%gestacao%'
+    or uri like '%Gestacao%' 
+    or uri like '%familia%' 
+    or uri like '%amamentacao%'
+    or uri like '%engravida%'
+    or uri like '%idade-gestacional%'
+    or uri like '%fecunda%'
+    or uri like '%leite-materno%'
+    or uri like '%bebe%'
+    or uri like '%fertilidade%')
+
+    or (host_name like '%panvel.com%' AND uri like '%/panvel/main.do?categoria=7&%')
+)
+
+then 'Gravidez'
+
+when (host_name like 'www.natura.com.br%' AND uri like '%/www/homem/%') then 'Homem'
+
+when( 
+ 
+    (uri like '%Infantil%'
+    or uri like '%infantil%'
+    or uri like '%bebe%'
+    or uri like '%Bebe%'
+    or uri like '%crianca%'
+    or uri like '%Crianca%')
+    or (host_name like '%netfarma.com.br' AND uri like '%/categoria.asp?idcategoria=1633&nivel=06&categoria=M%E3e+e+Beb%EA&topo=s%' or host_name like '%drogasil.com.br%' AND uri like '%/DrogasilEcommWeb/index.do?cdModulo=5%') 
+)
+
+then 'Infantil'
+
+when(
+
+    (uri like '%sexo%'
+    or uri like '%preservativo%')
+)
+
+then 'Sexualidade'
+
+
+when(
+(host_name like '%ultrafarma.com.br%' and uri like '%%'
+or host_name like '%farmadelivery.com.br%' and uri like '%%'
+or host_name like '%netfarma.com.br%' and uri like '%%'
+or host_name like '%onofre.com.br%' and uri like '%%'
+or host_name like '%drogasil.com.br%' and uri like '%%'
+or host_name like '%drogariasaopaulo.com.br%' and uri like '%%'
+or host_name like '%loja.paguemenos.com.br%' and uri like '%%'
+or host_name like '%panvel.com%' and uri like '%%'
+or host_name like '%araujo.com.br%' and uri like '%%')
+)
+
+then 'Portal'
+
+END AS categoria from tbgdt_stg_dpi
+
+where ((msisdn <> 'NA' or msisdn is not null or length(msisdn)>0)
+     and  (host_name <> 'NA' or host_name is not null or length(host_name)>0))
+
+and(
+   (host_name like '%agamiodontologia.com.br%')
+or (host_name like '%amarracaoamorosa7dias.com.br%')
+or (host_name like '%amarracaogratis.com%')
+or (host_name like '%amarracaomagia.com.br%')
+or (host_name like '%amilplanosodontologicos.com.br%')
+or (host_name like '%amoreamarracao.com%')
+or (host_name like '%aparecidaliberato.terra.com.br%')
+or (host_name like '%www.araujo.com.br%')
+or (host_name like '%www.blog.araujo.com.br%')
+or (host_name like '%www.astro.com%')
+or (host_name like '%astrocentro.com.br%')
+or (host_name like '%avon.com.br%')
+or (host_name like '%bemzen.uol.com.br%')
+or (host_name like '%bioderm.com.br%')
+or (host_name like '%boticario.com.br%')
+or (host_name like '%caminhosdosol.com.br%')
+or (host_name like '%centralfit.com.br%')
+or (host_name like '%clubedotaro.com.br%')
+or (host_name like '%corpoevidashop.com.br%')
+or (host_name like '%corpoidealsuplementos.com.br%')
+or (host_name like '%corpoperfeito.com.br%')
+or (host_name like '%dentistas24h.com%')
+or (host_name like '%www.divinoamor.com.br%')
+or (host_name like '%drogariasaopaulo.com.br%')
+or (host_name like '%drogasil.com.br%')
+or (host_name like '%drshapesuplementos.com.br%')
+or (host_name like '%estrelafone.com.br%')
+or (host_name like '%fabricadesuplementos.com.br%')
+or (host_name like '%farmadelivery.com.br%')
+or (host_name like '%focusesoterismo.com.br%')
+or (host_name like '%fortaosuplementos.com.br%')
+or (host_name like '%garmin.com%')
+or (host_name like '%helpcarebrasil.com.br%')
+or (host_name like '%home.odontosystem.com.br%')
+or (host_name like '%horoscopo.ego.globo.com%')
+or (host_name like '%horoscopodiario.com.br%')
+or (host_name like '%horoscopovirtual.uol.com.br%')
+or (host_name like '%isabelafreitas.com.br%')
+or (host_name like '%isabelmueller.com.br%')
+or (host_name like '%jequiti.com.br%')
+or (host_name like '%joaobidu.com.br%')
+or (host_name like '%kanui.com.br%')
+or (host_name like '%keruve.com.br%')
+or (host_name like '%loja.paguemenos.com.br%')
+or (host_name like '%lojadosuplemento.com.br%')
+or (host_name like '%lojavitalsuplementos.com.br%')
+or (host_name like '%lotusesoterismo.com.br%')
+or (host_name like '%madrugaosuplementos.com.br%')
+or (host_name like '%magiadosoraculos.com%')
+or (host_name like '%magyamistica.com.br%')
+or (host_name like '%maxtitanium.com.br%')
+or (host_name like '%meu-plano-odonto.com%')
+or (host_name like '%medicinageriatrica.com%')
+or (host_name like '%mundomystiko.com.br%')
+or (host_name like '%www.natura.com.br%')
+or (host_name like '%naturelifenutricao.com.br%')
+or (host_name like '%netfarma.com.br')
+or (host_name like '%niquitin.com.br%')
+or (host_name like '%numerologiadonome.com%')
+or (host_name like '%nutriallsuplementos.com%')
+or (host_name like '%nutrimundo.com.br%')
+or (host_name like '%odontoexcellence.com.br%')
+or (host_name like '%odontohealth.com.br%')
+or (host_name like '%odontologiamazaro.com.br%')
+or (host_name like '%odontoplus.com.br%')
+or (host_name like '%odontoprev.com.br%')
+or (host_name like '%odontosaopaulo.com.br%')
+or (host_name like '%odontospex.com.br%')
+or (host_name like '%odontovip.net%')
+or (host_name like '%ofengshui.com.br%')
+or (host_name like '%onofre.com.br%')
+or (host_name like '%oraculosweb.com.br%')
+or (host_name like '%paiogun.com%')
+or (host_name like '%panvel.com%')
+or (host_name like '%personare.com%')
+or (host_name like '%planetaesoterico.com.br%')
+or (host_name like '%polar.com%')
+or (host_name like '%portalangels.com%')
+or (host_name like '%portalesoterico.com.br%')
+or (host_name like '%prudentsenior.com.br%')
+or (host_name like '%revistaesoterica.com.br%')
+or (host_name like '%www.saudeja.com.br%')
+or (host_name like '%selectodonto.com.br%')
+or (host_name like '%semaxdailycare.com.br%')
+or (host_name like '%simpatiadeamor.com%')
+or (host_name like '%soespodonto.com.br%')
+or (host_name like '%somostodosum.ig.com.br%')
+or (host_name like '%sorridents.com.br%')
+or (host_name like '%sorrifacil.com.br%')
+or (host_name like '%sosuplementos.com.br%')
+or (host_name like '%tarotdoamor.com.br%')
+or (host_name like '%tarotonlinegratis.com.br%')
+or (host_name like '%teleassistencia24.com%')
+or (host_name like '%telehelp.com.br%')
+or (host_name like '%ultrafarma.com.br%')
+or (host_name like '%ultrafitness.com.br%')
+or (host_name like '%uniaoamorosa.com%')
+or (host_name like '%unimedodonto.com.br%')
+or (host_name like '%venturaesoterico.com.br%')
+or (host_name like '%vidatarot.com.br%')
+or (host_name like '%visaoastral.com.br%')
+or (host_name like '%yahoo.estrelaguia.com.br%'))
+
+or
+
+(
+(host_name like '%carenet.com.br%')
+ and
+(uri like '%klip%')
+)
+
+or
+(
+(host_name like '%oregonscientific.com.br%')
+and
+(uri like '%monitores-cardiacos%')
+)
+
+
+or
+(
+(host_name like '%speedo.com.br%')
+and
+(uri like '%produtos/produto/cod/955%')
+)
+
+or
+(
+(host_name like '%nike.com%')
+and(
+(uri like '%sport_watch%')
+or
+(uri like '%ipod_nano%')
+or
+(uri like '%running/nikeplus/gps-app%')
+))
+
+or
+(
+(host_name like '%lge.com%')
+and
+(uri like '%wearables%')
+) 
+
+or
+(
+(host_name like '%samsung.com%')
+and
+(uri like '%rel%C3%B3gios-inteligentes%')
+)
+
+or
+(
+(host_name like '%gradiente.com.br%')
+and
+(uri like '%safephone%')
+)
+
+or 
+(
+(host_name like '%desca.com%')
+and
+(uri like '%products_brazalete%')
+)
+
+or 
+(
+(host_name like '%iarossi.com.br%')
+and
+(uri like '%Dentista%')
+)
+
+or
+(
+(host_name like '%magazineluiza.com.br%')
+and
+(uri like '%suplementos%')
+)
+
+or
+(
+(host_name like '%extra.com.br%')
+and
+(uri like '%Suplementos%')
+)
+
+or
+(
+(host_name like '%pontofrio.com.br%')
+and(
+(uri like '%Suplementos%')
+or
+(uri like '%Fitness%')
+or
+(uri like '%infantil%')
+or
+(uri like '%bebes%')
+))
+
+or
+(
+(host_name like '%folha.uol.com.br%')
+and
+(uri like '%horoscopo%')
+)
+
+or
+( 
+(host_name like '%celldesign.com.br%') 
+and 
+(uri like '%1707%')
+)
+;
+
+
+-----------------------------------
+
+create table jaf_cat_cronicos_novo (
+procedure_duration string,
+msisdn string,
+uri string,
+mean_throughput_ul string,
+mean_throughput_dl string,
+total_ul_frames string,
+total_dl_frames string,
+total_data_ul string,
+total_data_dl string,
+host_name string,
+cgi string,
+cell_id string,
+session_duration string,
+categoria string
+);
+
+
+
+
+insert into table jaf_cat_cronicos_novo
+
+select
+
+procedure_duration,
+msisdn,
+uri,
+mean_throughput_ul,
+mean_throughput_dl,
+total_ul_frames,
+total_dl_frames,
+total_data_ul,
+total_data_dl,
+host_name,
+cgi,
+cell_id,
+session_duration,
+
+case
+
+when(
+
+     (uri like '%alergia%'
+     or uri like '%Alergia%')
+)
+
+then 'Alergia'
+
+
+when (uri like '%auto-imunes%') then 'Auto Imunes'
+
+when (uri like '%cancer%') then 'Cancer'
+
+when(
+
+     (uri like '%cardiaca%'
+     or uri like '%Cardiaca%'
+     or uri like '%cardiaco%'
+     or uri like '%cardiaco%'
+     or uri like '%cardiovascular%'
+     or uri like '%Cardiovascular%'
+     or uri like '%coracao%')
+)
+
+then 'Cardiaco'
+
+when (uri like '%clinica-geral%') then 'Clinica Geral'
+
+when (uri like '%degenerativa%') then 'Degenerativa'
+
+when(
+
+   (uri like '%diabete%')
+
+   or (host_name like '%adj.org.br%' and uri like '%%'
+   or host_name like '%blogdasaude.com.br%' and uri like '%categorias/saude-fisica%'
+   or host_name like '%diabetenet.com.br%' and uri like '%%'
+   or host_name like '%diabete.com.br%' and uri like '%%'
+   or host_name like '%diabetesedesportes.com.br%' and uri like '%%'
+   or host_name like '%portaldiabetes.com.br%' and uri like '%%')
+)
+
+then 'Diabetes'
+
+when (host_name like '%drauziovarella.com.br%' AND uri like '%/category/homem-2/%') then 'Doenca Homem'
+
+when (host_name like '%drauziovarella.com.br%' AND uri like '%/category/mulher-2/%') then 'Doenca Mulher'
+
+when (uri like '%doencas-de-pele%') then 'Doenca Pele'
+
+when (uri like '%doenca%') then 'Doenca'
+
+when(
+
+   (uri like '%exame%'
+   or uri like '%diagnostico%')
+)
+
+then 'Exames'
+
+when(
+
+    (uri like '%fertilidade%'
+    or uri like '%periodo-fertil%'
+    or uri like '%ovulacao%')
+)
+
+then 'fertilidade'
+
+when (uri like '%disturbios-gastrointestinais%') then 'Gastro Intestinais'
+
+when(
+
+    (uri like '%filhos%'
+    or uri like '%gravidez%'
+    or uri like '%Gravidez%'
+    or uri like '%gravida%'
+    or uri like '%Gravida%'
+    or uri like '%Gestante%'
+    or uri like '%gestante%'
+    or uri like '%gestacao%'
+    or uri like '%Gestacao%' 
+    or uri like '%familia%' 
+    or uri like '%amamentacao%'
+    or uri like '%engravida%'
+    or uri like '%idade-gestacional%'
+    or uri like '%fecunda%'
+    or uri like '%leite-materno%'
+    or uri like '%bebe%')
+
+   or (host_name like '%bebe.abril.com.br%' AND uri like '%%') 
+)
+
+then 'Gravidez'
+
+
+when (uri like '%doencas-hormonais%') then 'Hormonais'
+
+
+when(
+
+     (uri like '%doencas-infecciosas%'
+     or uri like '%virus%'
+     or uri like '%bacteria%')
+)
+
+then 'Infecciosas'
+
+when(
+
+     (uri like '%nutricao%'
+     or uri like '%Nutricao%')
+)
+
+then 'Nutrição'
+
+when (uri like '%obesidade%') then 'Obesidade'
+
+when (uri like '%crianca%') then 'Pediatria'
+
+when (uri like '%primeiros-socorros%') then 'Primeiros Socorros'
+
+when (uri like '%psicologicos%') then 'Psicológicos'
+
+when(
+
+    (uri like '%doencas-respiratorias%'
+    or uri like '%respirar%'
+    or uri like '%pneumonia%'
+    or uri like '%asma%')
+)
+
+then 'Respiratórias'
+
+when(
+
+    (uri like '%aparelho-reprodutor%'
+    or uri like '%utero%'
+    or uri like '%ovario%')
+) 
+
+then 'Reprodutor'
+
+when (uri like '%disturbios-do-sangue%') then 'Sangue'
+
+when (uri like '%corpo-humano%') then 'Saúde'
+
+when(
+
+    (uri like '%sexualidade%'
+    or uri like '%anticoncepcional%'
+    or uri like '%pilula-do-dia-seguinte%')
+) 
+
+then 'Sexualidade'
+
+when (uri like '%sintomas%') then 'Sintomas'
+
+when (uri like '%disturbios-do-sono%') then 'Sono'
+
+when(
+
+    (uri like '%tabagismo%'
+    or uri like '%cigarro%'
+    or uri like '%fumo%'
+    or uri like '%antitabagismo%'
+    or uri like '%fumante%'
+    or uri like '%nicotina%'
+    or uri like '%fumar%')
+
+    or (host_name like '%deixardefumar.com.br%' and uri like '%%'
+    or host_name like '%easywaysp.com.br%' and uri like '%%'
+    or host_name like '%euvouparardefumar.com%' and uri like '%%')
+)
+
+then 'Tabagismo'
+
+when(
+
+    (host_name like '%tuasaude.com%' and uri like '%%'
+    or host_name like '%drauziovarella.com.br%' and uri like '%%' 
+    or host_name like '%bulas.med.br%' and uri like '%%'
+    or host_name like '%blogdasaude.com.br%' and uri like '%%'
+    or host_name like '%tourlife.com.br%' and uri like '%%'
+    or host_name like '%medclick.com.br%' and uri like '%%'
+    or host_name like '%saudecominteligencia.com.br%' and uri like '%%'
+    or host_name like '%blogdasaude.com.br%' and uri like '%%'
+    or host_name like '%criasaude.com.br%' and uri like '%%')
+)
+
+then 'Portal'
+
+END AS Categoria from tbgdt_stg_dpi
+
+
+where ((msisdn <> 'NA' or msisdn is not null or length(msisdn)>0)
+     and  (host_name <> 'NA' or host_name is not null or length(host_name)>0))
+
+and(
+(host_name like	'%adj.org.br%')
+or (host_name like '%blogdasaude.com.br%')
+or (host_name like '%bulas.med.br%')
+or (host_name like '%criasaude.com.br%')
+or (host_name like '%deixardefumar.com.br%')
+or (host_name like '%diabete.com.br%')
+or (host_name like '%diabetenet.com.br%')
+or (host_name like '%diabetesedesportes.com.br%')
+or (host_name like '%drauziovarella.com.br%')
+or (host_name like '%easywaysp.com.br%')
+or (host_name like '%euvouparardefumar.com%')
+or (host_name like '%medclick.com.br%')
+or (host_name like '%portaldiabetes.com.br%')
+or (host_name like '%saudecominteligencia.com.br%')
+or (host_name like '%tourlife.com.br%')
+or (host_name like '%tuasaude.com%')
+);
+
+------------------------------------------ Salvar no hadoop a tabela agregada ------------------------
+
+insert overwrite local directory './output'  ROW FORMAT DELIMITED FIELDS TERMINATED BY '\177' select msisdn, categoria, count (*), sum(procedure_duration), sum(total_data_dl), sum(session_duration) from jaf_cat_comp_novo group by categoria, msisdn SORT BY msisdn ASC;
+
+insert overwrite local directory './output'  ROW FORMAT DELIMITED FIELDS TERMINATED BY '\177' select msisdn, categoria, count (*), sum(procedure_duration), sum(total_data_dl), sum(session_duration) from jaf_cat_cronicos_novo group by categoria, msisdn SORT BY msisdn ASC;
+
+insert overwrite local directory './output'  ROW FORMAT DELIMITED FIELDS TERMINATED BY '\177' select msisdn, categoria, count (*), sum(procedure_duration), sum(total_data_dl), sum(session_duration) from jaf_cat_portais_novo group by categoria, msisdn SORT BY msisdn ASC;
+
+-------------------------------- consolida o resultado em R -----------------------
+
+setwd("/home/h_loadbd/output")
+
+## Ler o Arquivo Portais tirando a notação cientifica / Subset por acesso, procedure duration e total_data_dl/reshape - modelar a tabela na forma correta
+
+
+portagg<-read.table("Portais Agregado.txt", sep="\177")
+portagg<-format(portagg,scientific=FALSE)
+
+port_acesso<-subset(portagg, select = c("V1","V2","V3"))
+
+port_procedure_duration<-subset(portagg, select = c("V1","V2","V4"))
+
+port_total_data_dl<-subset(portagg, select = c("V1","V2","V5"))
+
+tab_port_acesso<-reshape(port_acesso, direction = "wide", idvar="V1", timevar="V2")
+tab_port_procedure_duration<-reshape(port_procedure_duration, direction = "wide", idvar="V1", timevar="V2")
+tab_port_total_data_dl<-reshape(port_total_data_dl, direction = "wide", idvar="V1", timevar="V2")
+
+
+write.table(tab_port_acesso,file="tab_port_acesso",sep="\177",row.names=FALSE)
+write.table(tab_port_procedure_duration,file="tab_port_procedure_duration",sep="\177",row.names=FALSE)
+write.table(tab_port_total_data_dl,file="tab_port_total_data_dl",sep="\177",row.names=FALSE)
+
+
+## Ler Arquivo Cron
+
+
+cronagg<-read.table("Cronicos Agregado.txt", sep="\177")
+cronagg<-format(cronagg,scientific=FALSE)
+
+cron_acesso<-subset(cronagg, select = c("V1","V2","V3"))
+
+cron_procedure_duration<-subset(cronagg, select = c("V1","V2","V4"))
+
+cron_total_data_dl<-subset(cronagg, select = c("V1","V2","V5"))
+
+
+tab_cron_acesso<-reshape(cron_acesso, direction = "wide", idvar="V1", timevar="V2")
+tab_cron_procedure_duration<-reshape(cron_procedure_duration, direction = "wide", idvar="V1", timevar="V2")
+tab_cron_total_data_dl<-reshape(cron_total_data_dl, direction = "wide", idvar="V1", timevar="V2")
+
+write.table(tab_cron_acesso,file="tab_cron_acesso",sep="\177",row.names=FALSE)
+write.table(tab_cron_procedure_duration,file="tab_cron_procedure_duration",sep="\177",row.names=FALSE)
+write.table(tab_cron_total_data_dl,file="tab_cron_total_data_dl",sep="\177",row.names=FALSE)
+
+
+## Ler Arquivo Competidores
+
+
+compagg<-read.table("Competidores Agregado.txt", sep="")
+compagg<-format(compagg,scientific=FALSE)
+
+comp_acesso<-subset(compagg, select = c("V1","V2","V3"))
+
+comp_procedure_duration<-subset(compagg, select = c("V1","V2","V4"))
+
+comp_total_data_dl<-subset(compagg, select = c("V1","V2","V5"))
+
+
+
+tab_comp_acesso<-reshape(comp_acesso, direction = "wide", idvar="V1", timevar="V2")
+tab_comp_procedure_duration<-reshape(comp_procedure_duration, direction = "wide", idvar="V1", timevar="V2")
+tab_comp_total_data_dl<-reshape(comp_total_data_dl, direction = "wide", idvar="V1", timevar="V2")
+
+write.table(tab_comp_acesso,file="tab_comp_acesso",sep="\177",row.names=FALSE)
+write.table(tab_comp_procedure_duration,file="tab_comp_procedure_duration",sep="\177",row.names=FALSE)
+write.table(tab_comp_total_data_dl,file="tab_comp_total_data_dl",sep="\177",row.names=FALSE)
